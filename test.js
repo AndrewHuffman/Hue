@@ -195,7 +195,7 @@ function alertCycle() {
         });
 }
 Promise.reduce(_.range(65535), function(next, n) {
-    return alertCycle().then(function(){
+    return cycleHues().then(function(){
         return Promise.delay(10);
     })
 });
