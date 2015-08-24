@@ -173,7 +173,7 @@ _.each(_.functions(Object.create(Light.prototype)), function(lightFunc) {
     LightGroup.prototype[lightFunc] = function() {
         dir(this.lights);
         var args = _.toArray(arguments);
-//         Sequential style.
+//         "Serial" style
 //         return _.reduce(this.lights, function(lastPromise, light) {
 //              return lastPromise.then(function(){
 //                  return light[lightFunc].apply(light, args);
