@@ -240,50 +240,5 @@ function alertCycle() {
         return next();
     });
 }
-
-
-
-// var kitchen    = new LightGroup(1,2),
-//     livingRoom = new LightGroup(3,4);
-//
-// kitchen.off();
-// livingRoom.bri(255);
-// var l3 = new Light(3),
-//     l4 = new Light(4);
-// var l3hue = l3.cycle('hue'),
-//     l4hue = l4.cycle('hue'),
-//     l3bri = l3.cycle('bri'),
-//     l4bri = l4.cycle('bri'),
-//     l3sat = l3.cycle('sat'),
-//     l4sat = l4.cycle('sat');
-// l3.sat(255);
-// l4.sat(255);
-// Promise.reduce(_.range(100000), function(next, n) {
-//     l3hue(0.01);
-//     l4hue(0.005);
-//     l3bri(0.01);
-//     l4bri(0.01);
-//     // l3sat(0.02);
-//     // l4sat(0.02);
-//     return Promise.all([l3.done(), l4.done()]).then(function(){
-//         return Promise.delay(25);
-//     })
-// });
-// Promise.reduce(_.range(100000), function(next, n) {
-//     return alertCycle().then(function(){
-//         return Promise.delay(100);
-//     });
-// });
-var g = new LightGroup(1,2,3, 4);
-    g.bri(255);
-    // g.blink().then(function(){
-    //     g.bri(0);
-    //     return g.blink()
-    // }).then(function(){
-    //
-    // })
-Promise.reduce(_.range(100000), function() {
-    return g.blink(50).then(function(){
-        return Promise.delay(1000)
-    });
-});
+exports.Light = Light;
+exports.LightGroup = LightGroup
