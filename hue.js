@@ -173,11 +173,15 @@ _.each(_.functions(Object.create(Light.prototype)), function(lightFunc) {
     LightGroup.prototype[lightFunc] = function() {
         dir(this.lights);
         var args = _.toArray(arguments);
-        return _.reduce(this.lights, function(lastPromise, light) {
-            return lastPromise.then(function(){
-                return light[lightFunc].apply(light, args);
-            });
-        }, Promise.resolve());
+//         Sequential style.
+//         return _.reduce(this.lights, function(lastPromise, light) {
+//              return lastPromise.then(function(){
+//                  return light[lightFunc].apply(light, args);
+//              });
+//          }, Promise.resolve());
+        return Promise.all(_.map(this.lights, function(light) {
+            return light[lightFunc].apply(light, args);
+        }));
     };
 });
 
