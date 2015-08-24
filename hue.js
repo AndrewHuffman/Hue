@@ -79,17 +79,29 @@ _.merge(Light.prototype, {
         return this.done();
     },
     blink: function(delay) {
-        delay = delay || 10;
+        delay = delay || 100;
         this.delay(delay);
+        function wait() {
+            return function() {
+                return Promise.delay(delay);
+            }
+        }
         var off = this.off.bind(this),
             on  = this.on.bind(this);
-        this.on().then(function(){
-            return off()
-        }).then(function(){
-            return on();
-        }).then(function(){
-            return off();
-        })
+
+            return this.on()
+            .then(wait())
+            .then(function(){
+                return off();
+            })
+            .then(wait())
+            .then(function(){
+                return on();
+            })
+            .then(wait())
+            .then(function(){
+                return off();
+            });
     },
     delay: function(delay) {
         delay = delay || 0;
@@ -264,12 +276,14 @@ function alertCycle() {
 // });
 var g = new LightGroup(1,2,3, 4);
     g.bri(255);
-    g.blink().then(function(){
-        g.bri(0);
-        g.blink();``
+    // g.blink().then(function(){
+    //     g.bri(0);
+    //     return g.blink()
+    // }).then(function(){
+    //
+    // })
+Promise.reduce(_.range(100000), function() {
+    return g.blink(100).then(function(){
+        return Promise.delay(1000)
     });
-    // Promise.reduce(_.range(100000), function() {
-//     return g.blink(100).then(function(){
-//         return Promise.delay(1000)
-//     });
-// });
+});
