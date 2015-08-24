@@ -174,14 +174,14 @@ _.each(_.functions(Object.create(Light.prototype)), function(lightFunc) {
         dir(this.lights);
         var args = _.toArray(arguments);
 //         "Serial" style
-//         return _.reduce(this.lights, function(lastPromise, light) {
-//              return lastPromise.then(function(){
-//                  return light[lightFunc].apply(light, args);
-//              });
-//          }, Promise.resolve());
-        return Promise.all(_.map(this.lights, function(light) {
-            return light[lightFunc].apply(light, args);
-        }));
+        return _.reduce(this.lights, function(lastPromise, light) {
+             return lastPromise.then(function(){
+                 return light[lightFunc].apply(light, args);
+             });
+         }, Promise.resolve());
+        // return Promise.all(_.map(this.lights, function(light) {
+        //     return light[lightFunc].apply(light, args);
+        // }));
     };
 });
 
