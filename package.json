@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
       "type": "git",
-      "url": "git+https://github.com:AndrewHuffman/Hue.git"
+      "url": "http://github.com/AndrewHuffman/Hue"
     },
   "dependencies": {
     "bluebird": "^2.9.34",
