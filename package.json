@@ -3,8 +3,15 @@
   "version": "0.1.0",
   "description": "",
   "main": "hue.js",
-  "author": "Andrew Huffman",
+  "author": {
+      "name": "Andrew Huffman",
+      "email": "andrewhuffman@gmail.com"
+  },
   "license": "MIT",
+  "repository": {
+      "type": "git",
+      "url": "git+https://github.com:AndrewHuffman/Hue.git"
+    },
   "dependencies": {
     "bluebird": "^2.9.34",
     "lodash": "^3.10.1",
