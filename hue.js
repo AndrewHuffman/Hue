@@ -2,8 +2,8 @@
 var request = require('superagent'),
     _       = require('lodash'),
     Promise = require('bluebird'),
-    util    = require('util');
-
+    util    = require('util'),
+    color = require('onecolor');
 var inspect = util.inspect.bind(util);
 
 var ip      = '10.0.1.2',
@@ -88,20 +88,47 @@ _.merge(Light.prototype, {
         }
         var off = this.off.bind(this),
             on  = this.on.bind(this);
-
             return this.on()
             .then(wait())
             .then(function(){
                 return off();
-            })
+            }.bind(this))
             .then(wait())
             .then(function(){
                 return on();
-            })
+            }.bind(this))
             .then(wait())
             .then(function(){
                 return off();
-            });
+            }.bind(this));
+    },
+    alert: function(delay) {
+        delay = delay || 100;
+        this.delay(delay);
+        function wait() {
+            return function() {
+                return Promise.delay(delay);
+            }
+        }
+        var off = this.off.bind(this),
+            on  = this.on.bind(this);
+        this.color('red')
+            return this.on()
+            .then(wait())
+            .then(function(){
+                this.color('blue')
+                return off();
+            }.bind(this))
+            .then(wait())
+            .then(function(){
+                this.color('red')
+                return on();
+            }.bind(this))
+            .then(wait())
+            .then(function(){
+                this.color('blue')
+                return off();
+            }.bind(this));
     },
     delay: function(delay) {
         delay = delay || 0;
@@ -131,6 +158,16 @@ _.merge(Light.prototype, {
         this.set('hue', hue);
         return this;
     },
+    color: function(newColor) {
+        this.hue(Math.round(color(newColor).hue()*65535));
+        return this;
+    },
+    // rgb: function(r, g, b) {
+    //     var r_ratio = r/255,
+    //         g_ratio = g/255,
+    //         b_ratio = b/255;
+    //
+    // }
     bri: function(bri) {
         bri = bri % 256;
         this.set('bri', bri);
@@ -154,7 +191,11 @@ function LightGroup(lights) {
     lights = _.toArray(arguments);
     dir(lights)
     _.each(lights, function(id) {
-        this.lights.push(new Light(id))
+        if (_.isNumber(id)) {
+            this.lights.push(new Light(id))
+        } else if (id instanceof Light) {
+            this.lights.push(id);
+        }
     }.bind(this));
 }
 

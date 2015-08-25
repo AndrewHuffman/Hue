@@ -1,16 +1,14 @@
 {
-  "name": "hue-light-controller",
-  "version": "1.0.0",
+  "name": "hue-light",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
+  "main": "hue.js",
+  "author": "Andrew Huffman",
+  "license": "MIT",
   "dependencies": {
     "bluebird": "^2.9.34",
     "lodash": "^3.10.1",
+    "onecolor": "^2.5.0",
     "request": "^2.61.0",
     "superagent": "^1.3.0"
   },
