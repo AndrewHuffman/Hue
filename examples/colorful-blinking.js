@@ -52,7 +52,7 @@ var l3     = new Light(3),
     l4     = new Light(4);
     lights = [l3, l4],
     colors = ['red', 'blue', 'green', 'purple'];
-_.each(lights, function(l){return l.bri(0).sat(255)});
+_.each(lights, function(l){return l.bri(255).sat(255)});
 var fade = 25,
     step = 25;
 Promise.reduce(_.range(10000), function(){
